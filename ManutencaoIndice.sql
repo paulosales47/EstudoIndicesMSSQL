@@ -11,15 +11,15 @@ INNER JOIN sys.indexes IDX ON PAR.object_id = IDX.object_id  AND PAR.index_id = 
 INNER JOIN sys.tables TBL
 ON TBL.object_id = IDX.object_id and TBL.type ='U'
 
---@ FOCAR NAS TABELAS COM GRANDE QUANTDADE DE DADOS (CRIAR UM ÕNDICE CLUSTERIZADO)
+--@ FOCAR NAS TABELAS COM GRANDE QUANTDADE DE DADOS (CRIAR UM √çNDICE CLUSTERIZADO)
 
 --===========================================================================================
--- DESFRAGMENTAR ÕNDICE
+-- DESFRAGMENTAR √çNDICE
 --===========================================================================================
 DBCC INDEXDEFRAG (IndexDemoDB, 'STD_Evaluation', IX_STD_EVALUATION_COURSE_ID);
 
 --===========================================================================================
--- REBUILD ÕNDEX (RECRIAR)	@ FRAGMENTA«√O ACIMA DE 30% @
+-- REBUILD √çNDEX (RECRIAR)	@ FRAGMENTA√á√ÉO ACIMA DE 30% @
 --===========================================================================================
 ALTER INDEX IX_STD_EVALUATION_STD_ID ON STD_Evaluation REBUILD PARTITION = ALL WITH (
 	 PAD_INDEX = OFF
@@ -30,7 +30,7 @@ ALTER INDEX IX_STD_EVALUATION_STD_ID ON STD_Evaluation REBUILD PARTITION = ALL W
 	,ALLOW_PAGE_LOCKS = ON)
 
 --===========================================================================================
--- REORGANINZAR ÕNDEX	@ FRAGMENTA«√O ENTRE 5% E 30% @
+-- REORGANINZAR √çNDEX	@ FRAGMENTA√á√ÉO ENTRE 5% E 30% @
 --===========================================================================================
 GO
 
@@ -38,7 +38,7 @@ ALTER INDEX IX_COURSES_NAME ON Courses REORGANIZE WITH( LOB_COMPACTION = ON )
 
 
 --===========================================================================================
--- REBUILD ÕNDEX (RECRIAR)	@ FRAGMENTA«√O ACIMA DE 30% @ (TODOS OS ÕNDICES DA TABELA)
+-- REBUILD √çNDEX (RECRIAR)	@ FRAGMENTA√á√ÉO ACIMA DE 30% @ (TODOS OS √çNDICES DA TABELA)
 --===========================================================================================
 ALTER INDEX ALL ON STD_Evaluation REBUILD PARTITION = ALL WITH (
 	 PAD_INDEX = OFF
@@ -50,7 +50,11 @@ ALTER INDEX ALL ON STD_Evaluation REBUILD PARTITION = ALL WITH (
 
 
 --===========================================================================================
--- REORGANINZAR ÕNDEX	@ FRAGMENTA«√O ENTRE 5% E 30% @ (TODOS OS ÕNDICES DA TABELA)
+-- REORGANINZAR √çNDEX	@ FRAGMENTA√á√ÉO ENTRE 5% E 30% @ (TODOS OS √çNDICES DA TABELA)
 --===========================================================================================
 ALTER INDEX ALL ON STD_Evaluation REORGANIZE
 
+--===========================================================================================
+-- REBUILD TABELA HEAP
+--===========================================================================================
+ALTER TABLE STD_Evaluation REBUILD
