@@ -175,3 +175,16 @@ USE IndexDemoDB
 GO
 
 EXEC sp_updatestats
+
+--============================================================================================
+-- ATUALIZAR ESTATÍSTICAS UTILIZANDO AMOSTRA
+--===========================================================================================
+UPDATE STATISTICS STD_Evaluation WITH SAMPLE 50 PERCENT
+
+--============================================================================================
+-- ATUALIZAR ESTATÍSTICAS UTILIZANDO TODA TABELA
+--===========================================================================================
+UPDATE STATISTICS STD_Evaluation WITH FULLSCAN, NORECOMPUTE 
+
+--NORECOMPUTE: Desativar a opção de atualização automática de estatísticas, AUTO_UPDATE_STATISTICS, para as estatísticas especificadas. Se essa opção for especificada, o otimizador de consulta conclui essa atualização de estatísticas e desabilita futuras atualizações.
+
